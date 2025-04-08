@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Каталог - Онлайн Магазин</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f9f9f9;
+    }
+    header {
+      background: #2b2b2b;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    nav {
+      background: #444;
+      padding: 10px;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+    }
+    .products {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 20px;
+      gap: 20px;
+    }
+    .product {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      padding: 15px;
+      width: 250px;
+      text-align: center;
+    }
+    .product img {
+      width: 100%;
+      border-radius: 10px;
+    }
+    .product h3 {
+      margin: 10px 0;
+    }
+    .product button {
+      background: #ff6b00;
+      border: none;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    footer {
+      background: #2b2b2b;
+      color: white;
+      text-align: center;
+      padding: 10px;
+      margin-top: 40px;
+    }
+  </style>
+  <script>
+    // Себетті localStorage-ке сақтау
+    function saveCart(cart) {
+      localStorage.setItem('cart', JSON.stringify(cart));
+    }
+
+    // Себетті localStorage-тен алу
+    function getCart() {
+      const cart = localStorage.getItem('cart');
+      return cart ? JSON.parse(cart) : [];
+    }
+
+    // Себетке қосу функциясы
+    function addToCart(product, price, image) {
+      const cart = getCart();
+      const item = { product, price, image };
+      cart.push(item);
+      saveCart(cart);
+      alert(`${product} себетке қосылды!`);
+    }
+
+    // Себеттегі тауарлар саны көрсеткішін жаңарту
+    function updateCartCount() {
+      const cart = getCart();
+      const cartCount = document.getElementById('cart-count');
+      cartCount.textContent = cart.length;
+    }
+
+    window.onload = updateCartCount;  // Бет жүктелгенде себеттегі санды көрсету
+  </script>
+</head>
+<body>
+  <header>
+    <h1>Каталог</h1>
+  </header>
+  <nav>
+    <a href="index.html">Басты бет</a>
+    <a href="catalog.html">Каталог</a>
+    <a href="cart.html">Себет (<span id="cart-count">0</span>)</a>
+  </nav>
+
+  <section class="products">
+    <div class="product">
+      <img src="https://th.bing.com/th?id=OIF.zQEG0kzw14LfYrgO0CG%2bKQ&rs=1&pid=ImgDetMain" alt="Смартфон">
+      <h3>Смартфон</h3>
+      <p>150 000 ₸</p>
+      <button onclick="addToCart('Смартфон', 150000, 'https://th.bing.com/th?id=OIF.zQEG0kzw14LfYrgO0CG%2bKQ&rs=1&pid=ImgDetMain')">Себетке қосу</button>
+    </div>
+    <div class="product">
+      <img src="https://th.bing.com/th/id/OIP.t6lNy5IPsB2pmMFKylO7RAHaHa?rs=1&pid=ImgDetMain" alt="Ноутбук">
+      <h3>Ноутбук</h3>
+      <p>350 000 ₸</p>
+      <button onclick="addToCart('Ноутбук', 350000, 'https://th.bing.com/th/id/OIP.t6lNy5IPsB2pmMFKylO7RAHaHa?rs=1&pid=ImgDetMain')">Себетке қосу</button>
+    </div>
+    <div class="product">
+      <img src="https://th.bing.com/th/id/OIP.zvggFqOkjPW_v1CMSHsSGwHaHa?w=550&h=550&rs=1&pid=ImgDetMain" alt="Құлаккап">
+      <h3>Құлаккап</h3>
+      <p>25 000 ₸</p>
+      <button onclick="addToCart('Құлаккап', 25000, 'https://th.bing.com/th/id/OIP.zvggFqOkjPW_v1CMSHsSGwHaHa?w=550&h=550&rs=1&pid=ImgDetMain')">Себетке қосу</button>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Онлайн Магазин. Барлық құқықтар қорғалған.</p>
+  </footer>
+</body>
+</html>
+
+

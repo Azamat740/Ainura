@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Себет - Онлайн Магазин</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f9f9f9;
+    }
+    header {
+      background: #2b2b2b;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    nav {
+      background: #444;
+      padding: 10px;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+    }
+    .cart-items {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .cart-item {
+      background: white;
+      border-radius: 10px;
+      padding: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    .cart-item img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+    .payment-methods {
+      background: white;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      margin-top: 20px;
+    }
+    .remove-btn {
+      background: #ff6b00;
+      border: none;
+      color: white;
+      padding: 5px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .pay-btn {
+      background: #28a745;
+      border: none;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      width: 100%;
+      margin-top: 20px;
+    }
+    .notification {
+      display: none;
+      background: #28a745;
+      color: white;
+      padding: 10px;
+      margin-top: 10px;
+      text-align: center;
+      border-radius: 5px;
+    }
+  </style>
+  <script>
+    // Себетті localStorage-ке сақтау
+    function saveCart(cart) {
+      localStorage.setItem('cart', JSON.stringify(cart));
+    }
+
+    // Себетті localStorage-тен алу
+    function getCart() {
+      const cart = localStorage.getItem('cart');
+      return cart ? JSON.parse(cart) : [];
+    }
+
+    // Тауарды себеттен жою
+    function removeFromCart(index) {
+      const cart = getCart();
+      cart.splice(index, 1);  // Таңдалған тауарды алып тастау
+      saveCart(cart);  // Жаңартылған себетті сақтау
+      showCart();  // Себетті қайтадан көрсету
+    }
+
+    // Себеттегі тауарларды көрсету
+    function showCart() {
+      const cart = getCart();
+      const cartContainer = document.getElementById('cart-items');
+      cartContainer.innerHTML = '';  // Себеттегі барлық өнімдерді тазалау
+
+      if (cart.length === 0) {
+        cartContainer.innerHTML = '<p>Себет бос.</p>';
+      } else {
+        let totalPrice = 0;
+        cart.forEach((item, index) => {
+          totalPrice += item.price;
+          const itemElement = document.createElement('div');
+          itemElement.classList.add('cart-item');
+          itemElement.innerHTML = `
+            <img src="${item.image}" alt="${item.product}" width="100">
+            <div>
+              <h3>${item.product}</h3>
+              <p>${item.price} ₸</p>
+            </div>
+            <button class="remove-btn" onclick="removeFromCart(${index})">Жою</button>
+          `;
+          cartContainer.appendChild(itemElement);
+        });
+
+        const totalPriceElement = document.createElement('div');
+        totalPriceElement.classList.add('cart-item');
+        totalPriceElement.innerHTML = `
+          <h3>Жалпы баға: ${totalPrice} ₸</h3>
+        `;
+        cartContainer.appendChild(totalPriceElement);
+      }
+    }
+
+    // Төлем жасау
+    function proceedToPayment() {
+      const cart = getCart();
+      if (cart.length === 0) {
+        alert("Себетіңіз бос! Тауар қосыңыз.");
+        return;
+      }
+
+      const paymentMethod = document.querySelector('input[name="payment-method"]:checked');
+      if (!paymentMethod) {
+        alert("Төлем әдісін таңдаңыз.");
+        return;
+      }
+
+      // Төлем аяқталған соң хабарлама
+      const notification = document.getElementById('payment-notification');
+      notification.innerText = `Төлем сәтті аяқталды! Төлем әдісі: ${paymentMethod.value}`;
+      notification.style.display = 'block';
+      // Себетті тазалау
+      localStorage.removeItem('cart');
+      setTimeout(() => {
+        notification.style.display = 'none';
+        showCart();  // Себетті қайтадан көрсету
+      }, 3000);
+    }
+
+    window.onload = showCart;  // Бет жүктелгенде себеттегі санды көрсету
+  </script>
+</head>
+<body>
+  <header>
+    <h1>Себет</h1>
+  </header>
+  <nav>
+    <a href="index.html">Басты бет</a>
+    <a href="catalog.html">Каталог</a>
+    <a href="cart.html">Себет</a>
+  </nav>
+
+  <section id="cart-items" class="cart-items"></section>
+
+  <!-- Төлем әдістерін таңдау -->
+  <div class="payment-methods">
+    <h3>Төлем әдісін таңдаңыз:</h3>
+    <input type="radio" name="payment-method" value="Kaspi Gold"> Kaspi Gold <br>
+    <input type="radio" name="payment-method" value="Банктік карта"> Банктік карта <br>
+    <input type="radio" name="payment-method" value="Қолма-қол төлем"> Қолма-қол төлем <br>
+
+    <button class="pay-btn" onclick="proceedToPayment()">Оплатить</button>
+  </div>
+
+  <!-- Төлем хабарламасы -->
+  <div id="payment-notification" class="notification"></div>
+
+  <footer>
+    <p>&copy; 2025 Онлайн Магазин. Барлық құқықтар қорғалған.</p>
+  </footer>
+</body>
+</html>
+
+

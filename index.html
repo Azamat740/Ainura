@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Басты бет - Онлайн Магазин</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f9f9f9;
+    }
+    header {
+      background: #2b2b2b;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    nav {
+      background: #444;
+      padding: 10px;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+    }
+    .content {
+      padding: 30px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    footer {
+      background: #2b2b2b;
+      color: white;
+      text-align: center;
+      padding: 10px;
+      margin-top: 40px;
+    }
+    .back-btn, .next-btn {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #ff6b00;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Менің Онлайн Магазинім</h1>
+  </header>
+  <nav>
+    <a href="index.html">Басты бет</a>
+    <a href="catalog.html">Каталог</a>
+    <a href="cart.html">Себет</a>
+  </nav>
+
+  <div class="content">
+    <h2>Магазин туралы ақпарат</h2>
+    <p>Біздің интернет-дүкен әртүрлі тұрмыстық заттар мен гаджеттерді ұсынады. Қол жетімді бағалар мен жылдам жеткізу — басты артықшылығымыз.</p>
+    <h2>Тарих</h2>
+    <p>Біздің компания 2010 жылы құрылды және бүгінде кең ассортиментті өнімдермен қызмет көрсетеді. Біз барлық клиенттерімізге үздік қызмет ұсынуға тырысамыз.</p>
+  </div>
+
+  <button class="back-btn" onclick="window.history.back();">Назад</button>
+  <button class="next-btn" onclick="window.location.href='catalog.html';">Келесі бет</button>
+
+  <footer>
+    <p>&copy; 2025 Менің Онлайн Магазинім. Барлық құқықтар қорғалған.</p>
+  </footer>
+</body>
+</html>
